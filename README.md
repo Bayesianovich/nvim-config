@@ -76,7 +76,7 @@ mv ~/.cache/nvim ~/.cache/nvim.bak
 
 2. **克隆此配置**
 ```bash
-git clone https://github.com/YOUR_USERNAME/nvim-config.git ~/.config/nvim
+git clone https://github.com/Bayesianovich/nvim-config.git ~/.config/nvim
 ```
 
 3. **启动 Neovim**
