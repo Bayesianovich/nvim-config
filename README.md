@@ -5,7 +5,7 @@
 ## ✨ 特性
 
 - 🤖 **多AI助手集成**: Claude Code, Gemini, Codex 三大AI助手
-- 🐛 **强大的调试功能**: 集成 DAP 调试器，支持 Go 和 Python
+- 🐛 **强大的调试功能**: 集成 DAP 调试器，支持 Go、C/C++ 和 Python
 - ⚡ **快速导航**: Leap 快速跳转
 - 📝 **Todo 管理**: Todo Comments 高亮和快速跳转
 - 💼 **时间追踪**: WakaTime 编码时间统计
@@ -61,8 +61,9 @@
 - Git
 - [Nerd Font](https://www.nerdfonts.com/) (推荐 JetBrainsMono Nerd Font)
 - Node.js (用于某些 LSP 服务器)
-- Python 3 (用于 Python 调试)
-- Go (用于 Go 调试，可选)
+- Python 3 (可选，用于 Python 开发和调试)
+- Go (可选，用于 Go 开发和调试)
+- C/C++ 编译工具链 (可选，用于 C/C++ 开发和调试)
 
 ### 安装步骤
 
@@ -105,8 +106,11 @@ export GEMINI_API_KEY="your-api-key-here"
 ### 调试器配置
 
 调试器适配器会通过 Mason 自动安装，支持：
-- Go (delve)
-- Python (debugpy)
+- **Go** - delve 调试器
+- **C/C++/Rust** - codelldb 调试器
+- **Python** - debugpy 调试器
+
+首次启动 Neovim 时，这些调试器会自动安装。如需调试特定语言，请确保系统已安装对应的语言环境。
 
 ### WakaTime 配置
 
