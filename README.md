@@ -57,7 +57,7 @@
 
 ### 前置要求
 
-- Neovim >= 0.9.0
+- Neovim >= **0.10.0** (推荐 0.11.0+，最低要求 0.9.0)
 - Git
 - [Nerd Font](https://www.nerdfonts.com/) (推荐 JetBrainsMono Nerd Font)
 - Node.js (用于某些 LSP 服务器)
@@ -120,14 +120,37 @@ export GEMINI_API_KEY="your-api-key-here"
 - `<leader>gg` - 打开 Lazygit
 
 ### AI 助手快捷键
-| 功能 | 快捷键 | 说明 |
-|------|--------|------|
-| Claude Code | `<leader>cc` | 切换 Claude |
-| Claude Focus | `<leader>cf` | 聚焦 Claude 窗口 |
-| Claude Accept | `<leader>ca` | 接受差异 |
-| Gemini Toggle | `<leader>ge` | 切换 Gemini 侧边栏 |
-| Gemini Session | `<leader>gc` | 启动 AI 会话 |
-| Codex Toggle | `<leader>cx` | 切换 Codex 侧边栏 |
+
+#### Claude Code 快捷键
+| 快捷键 | 模式 | 功能说明 |
+|--------|------|----------|
+| `<leader>cc` | Normal | 打开/关闭 Claude 对话窗口 |
+| `<leader>cf` | Normal | 聚焦到 Claude 窗口 |
+| `<leader>cr` | Normal | 恢复上一次 Claude 会话 |
+| `<leader>cC` | Normal | 继续当前 Claude 对话 |
+| `<leader>cm` | Normal | 选择 Claude AI 模型 |
+| `<leader>cb` | Normal | 添加当前缓冲区到 Claude 上下文 |
+| `<leader>cs` | Visual | 发送选中的文本到 Claude |
+| `<leader>cs` | File Tree | 从文件树添加文件到 Claude |
+| `<leader>ca` | Normal | 接受 Claude 建议的代码差异 |
+| `<leader>cd` | Normal | 拒绝 Claude 建议的代码差异 |
+
+#### Gemini 快捷键
+| 快捷键 | 模式 | 功能说明 |
+|--------|------|----------|
+| `<leader>ge` | Normal | 切换 Gemini 侧边栏显示/隐藏 |
+| `<leader>gc` | Normal | 启动或切换到 Gemini AI 会话 |
+| `<leader>gd` | Normal | 发送当前行的诊断信息到 Gemini |
+| `<leader>gD` | Normal | 发送整个文件的诊断信息到 Gemini |
+| `<leader>gs` | Visual | 发送选中的代码到 Gemini 分析 |
+| `<leader>ga` | Normal | 接受 Gemini 建议的代码修改 |
+| `<leader>gx` | Normal | 拒绝 Gemini 建议的代码修改 |
+
+#### Codex 快捷键
+| 快捷键 | 模式 | 功能说明 |
+|--------|------|----------|
+| `<leader>cx` | Normal/Terminal | 切换 Codex AI 侧边栏 |
+| `<C-q>` | Codex 窗口 | 退出 Codex 窗口 |
 
 ### 调试快捷键
 | 功能 | 快捷键 | 说明 |
