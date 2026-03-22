@@ -6,7 +6,7 @@ return {
     require("gemini").setup()
   end,
   keys = {
-    { "<leader>g", nil, desc = "Gemini Code" },
+    { "<leader>g", nil, desc = "Git / AI" },
     { "<leader>ge", "<cmd>GeminiToggle<cr>", desc = "Toggle Gemini sidebar" },
     { "<leader>gc", "<cmd>GeminiSwitchToCli<cr>", desc = "Spawn or switch to AI session" },
     { "<leader>gd", "<cmd>GeminiSendLineDiagnostic<cr>", mode = "n", desc = "Send to Gemini" },
