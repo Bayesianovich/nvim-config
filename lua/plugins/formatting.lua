@@ -4,11 +4,17 @@
 return {
   {
     "stevearc/conform.nvim",
-    opts = {
-      formatters_by_ft = {
-        ["cpp"] = { "clang-format" },
-        ["c"] = { "clang-format" },
-      },
-    },
+    opts = function(_, opts)
+      opts.formatters_by_ft = opts.formatters_by_ft or {}
+      opts.formatters_by_ft.c = { "clang-format" }
+      opts.formatters_by_ft.cpp = { "clang-format" }
+
+      opts.formatters = opts.formatters or {}
+      opts.formatters["clang-format"] = {
+        prepend_args = {
+          "--style={BasedOnStyle: LLVM, IndentWidth: 4, TabWidth: 4, UseTab: Never}",
+        },
+      }
+    end,
   },
 }
