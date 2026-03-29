@@ -2,7 +2,7 @@ return {
   -- 1. 基础透明度插件，可以强制让所有窗口透明
   {
     "xiyaowong/transparent.nvim",
-    lazy = false,
+    event = "UIEnter",
     opts = {
       extra_groups = {
         "NormalFloat", -- 浮动窗口
