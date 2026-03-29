@@ -1,73 +1,48 @@
-# � My Neovim Configuration
+# My Neovim Configuration
 
-基于 [LazyVim](https://github.com/LazyVim/LazyVim) 的个人 Neovim 配置，集成了多个AI助手和实用插件，打造强大的开发环境。
+基于 [LazyVim](https://github.com/LazyVim/LazyVim) 的个人 Neovim 配置，重点围绕下面几类日常开发场景来组织：
 
-## ✨ 特性
+- AI 协作：Claude Code、Gemini、Codex
+- 终端与 Git 工作流：Snacks Terminal、Lazygit、Diffview
+- 调试：`nvim-dap`、`nvim-dap-ui`、`mason-nvim-dap`
+- 编辑体验：Leap、Yanky、Surround、UFO Folding
+- 文档与界面：render-markdown、Dashboard、Lualine、透明主题
 
-- 🤖 **多AI助手集成**: Claude Code, Gemini, Codex 三大AI助手
-- 🐛 **强大的调试功能**: 集成 DAP 调试器，支持 Go、C/C++ 和 Python
-- ⚡ **快速导航**: Leap 快速跳转
-- 📝 **Todo 管理**: Todo Comments 高亮和快速跳转
-- 💼 **时间追踪**: WakaTime 编码时间统计
-- 🎨 **美化界面**: 自定义 Dashboard
-- 🔧 **代码格式化**: Conform.nvim + clang-format
-- 🔤 **自动配对**: 智能括号配对
+这不是一套“尽量堆满插件”的配置，而是一套按功能拆文件、方便长期维护和复用的配置。
 
-## 📦 插件列表
+## 特点
 
-### AI 助手
-- **Claude Code** (`coder/claudecode.nvim`) - Claude AI 编码助手
-  - `<leader>cc` - 打开/关闭 Claude
-  - `<leader>cf` - 聚焦 Claude
-  - `<leader>ca` - 接受差异
-  - `<leader>cd` - 拒绝差异
-  
-- **Gemini Companion** (`gutsavgupta/nvim-gemini-companion`) - Google Gemini AI 助手
-  - `<leader>ge` - 切换 Gemini 侧边栏
-  - `<leader>gc` - 启动 AI 会话
-  - `<leader>ga` - 接受建议
-  - `<leader>gx` - 拒绝建议
-  
-- **Codex** (`kkrampis/codex.nvim`) - AI 代码助手
-  - `<leader>cx` - 切换 Codex 侧边栏
+- 基于 LazyVim，但保留了明确的个人工作流
+- `lua/config` 负责核心行为，`lua/plugins` 负责功能模块
+- AI、终端、调试、编辑体验分层清晰
+- 保留 `lazy-lock.json`，方便复现锁定版本
+- 支持按文件类型覆盖缩进，例如 Python / C / C++ / Rust 默认 4 空格
 
-### 开发工具
-- **nvim-dap** - 调试适配器协议支持
-  - `<F5>` - 开始/继续调试
-  - `<F1>` - 步入
-  - `<F2>` - 步过
-  - `<F3>` - 步出
-  - `<leader>db` - 切换断点
-  
-- **Leap** (`andyg/leap.nvim`) - 快速跳转
-- **Todo Comments** (`folke/todo-comments.nvim`) - Todo 注释高亮
-  - `]t` / `[t` - 下一个/上一个 todo
-  - `<leader>xt` - 在 Trouble 中显示
-  - `<leader>st` - 在 Telescope 中搜索
-  
-- **Conform.nvim** - 代码格式化（支持 clang-format）
-- **nvim-autopairs** - 自动括号配对
-- **WakaTime** - 编码时间统计
+## 前置要求
 
-### 界面美化
-- **Snacks Dashboard** - 自定义启动界面
-- **Lualine** - 状态栏（集成 Codex 状态显示）
+建议至少准备下面这些基础环境：
 
-## 🚀 快速开始
+- Neovim `>= 0.11`
+- `git`
+- `curl` 和 `unzip`
+- `ripgrep`
+- `fd` 或 `fdfind`
+- 一个可用的 C 编译器
+- Nerd Font
 
-### 前置要求
+根据你的使用场景，下面这些工具也很推荐：
 
-- Neovim >= **0.10.0** (推荐 0.11.0+，最低要求 0.9.0)
-- Git
-- [Nerd Font](https://www.nerdfonts.com/) (推荐 JetBrainsMono Nerd Font)
-- Node.js (用于某些 LSP 服务器)
-- Python 3 (可选，用于 Python 开发和调试)
-- Go (可选，用于 Go 开发和调试)
-- C/C++ 编译工具链 (可选，用于 C/C++ 开发和调试)
+- `lazygit`
+- `wl-clipboard` 或 `xclip`
+- `node`
+- `python3`
+- `go`
+- `clang-format`
 
-### 安装步骤
+## 安装
 
-1. **备份现有配置**（如果有的话）
+1. 备份旧配置：
+
 ```bash
 mv ~/.config/nvim ~/.config/nvim.bak
 mv ~/.local/share/nvim ~/.local/share/nvim.bak
@@ -75,168 +50,219 @@ mv ~/.local/state/nvim ~/.local/state/nvim.bak
 mv ~/.cache/nvim ~/.cache/nvim.bak
 ```
 
-2. **克隆此配置**
+2. 克隆仓库：
+
 ```bash
 git clone https://github.com/Bayesianovich/nvim-config.git ~/.config/nvim
 ```
 
-3. **启动 Neovim**
+3. 首次启动：
+
 ```bash
 nvim
 ```
 
-首次启动时，Lazy.nvim 会自动安装所有插件，请耐心等待。
+首次启动时，Lazy.nvim 会根据 [lazy-lock.json](./lazy-lock.json) 安装锁定版本的插件。
 
-### AI 助手配置
+4. 建议首次启动后执行：
 
-#### Claude Code
-需要配置 Anthropic API Key:
-```bash
-export ANTHROPIC_API_KEY="your-api-key-here"
+```vim
+:checkhealth
+:Mason
 ```
 
-#### Gemini
-需要配置 Google Gemini API Key:
+如果你更新了仓库但本地插件没有同步，可以执行：
+
+```vim
+:Lazy sync
+```
+
+## AI 相关配置
+
+### Claude Code
+
+需要本机已安装 `claude` CLI，并完成认证。这个插件本身依赖 Claude Code CLI，而不只是一个环境变量。
+
+参考命令：
+
+```bash
+which claude
+claude doctor
+```
+
+### Gemini
+
+需要设置：
+
 ```bash
 export GEMINI_API_KEY="your-api-key-here"
 ```
 
-建议将这些环境变量添加到你的 `~/.bashrc` 或 `~/.zshrc` 文件中。
+### Codex
 
-### 调试器配置
+当前配置使用的是 `codex.nvim`，它依赖 Codex CLI。
 
-调试器适配器会通过 Mason 自动安装，支持：
-- **Go** - delve 调试器
-- **C/C++/Rust** - codelldb 调试器
-- **Python** - debugpy 调试器
+你至少需要：
 
-首次启动 Neovim 时，这些调试器会自动安装。如需调试特定语言，请确保系统已安装对应的语言环境。
-
-### WakaTime 配置
-
-首次使用 WakaTime 时，会提示输入 API key，可以从 [WakaTime 官网](https://wakatime.com/) 获取。
-
-## ⌨️ 常用快捷键
-
-### 通用快捷键
-- `<leader>` = `空格键`
-- `<leader>2` - 打开浮动终端
-- `<leader>gg` - 打开 Lazygit
-
-### AI 助手快捷键
-
-#### Claude Code 快捷键
-| 快捷键 | 模式 | 功能说明 |
-|--------|------|----------|
-| `<leader>cc` | Normal | 打开/关闭 Claude 对话窗口 |
-| `<leader>cf` | Normal | 聚焦到 Claude 窗口 |
-| `<leader>cr` | Normal | 恢复上一次 Claude 会话 |
-| `<leader>cC` | Normal | 继续当前 Claude 对话 |
-| `<leader>cm` | Normal | 选择 Claude AI 模型 |
-| `<leader>cb` | Normal | 添加当前缓冲区到 Claude 上下文 |
-| `<leader>cs` | Visual | 发送选中的文本到 Claude |
-| `<leader>cs` | File Tree | 从文件树添加文件到 Claude |
-| `<leader>ca` | Normal | 接受 Claude 建议的代码差异 |
-| `<leader>cd` | Normal | 拒绝 Claude 建议的代码差异 |
-
-#### Gemini 快捷键
-| 快捷键 | 模式 | 功能说明 |
-|--------|------|----------|
-| `<leader>ge` | Normal | 切换 Gemini 侧边栏显示/隐藏 |
-| `<leader>gc` | Normal | 启动或切换到 Gemini AI 会话 |
-| `<leader>gd` | Normal | 发送当前行的诊断信息到 Gemini |
-| `<leader>gD` | Normal | 发送整个文件的诊断信息到 Gemini |
-| `<leader>gs` | Visual | 发送选中的代码到 Gemini 分析 |
-| `<leader>ga` | Normal | 接受 Gemini 建议的代码修改 |
-| `<leader>gx` | Normal | 拒绝 Gemini 建议的代码修改 |
-
-#### Codex 快捷键
-| 快捷键 | 模式 | 功能说明 |
-|--------|------|----------|
-| `<leader>cx` | Normal/Terminal | 切换 Codex AI 侧边栏 |
-| `<C-q>` | Codex 窗口 | 退出 Codex 窗口 |
-
-### 调试快捷键
-| 功能 | 快捷键 | 说明 |
-|------|--------|------|
-| 开始/继续 | `<F5>` | 启动或继续调试 |
-| 步入 | `<F1>` | Step Into |
-| 步过 | `<F2>` | Step Over |
-| 步出 | `<F3>` | Step Out |
-| 断点 | `<leader>db` | 切换断点 |
-
-### Todo 快捷键
-| 功能 | 快捷键 | 说明 |
-|------|--------|------|
-| 下一个 Todo | `]t` | 跳转到下一个 todo 注释 |
-| 上一个 Todo | `[t` | 跳转到上一个 todo 注释 |
-| Todo 列表 | `<leader>st` | 在 Telescope 中搜索 |
-
-## 📁 目录结构
-
+```bash
+npm install -g @openai/codex
+export OPENAI_API_KEY="your-api-key-here"
 ```
+
+### LazyVim AI Extras
+
+当前 [lazyvim.json](./lazyvim.json) 里还启用了这些 extras：
+
+- `ai.copilot`
+- `ai.copilot-chat`
+- `ai.supermaven`
+
+如果你不想用它们，可以直接从 [lazyvim.json](./lazyvim.json) 里删掉对应条目。
+
+## 常用快捷键
+
+### 通用
+
+- `<leader>` = 空格
+- `<leader>2`：打开/关闭居中的浮动终端
+- `<leader>3`：打开/关闭右侧终端
+- `<leader>gg`：打开 Lazygit
+- `<leader>p`：打开 Yank 历史
+
+### Claude Code
+
+- `<leader>ac`：打开/关闭 Claude
+- `<leader>af`：聚焦 Claude
+- `<leader>ar`：恢复上一段会话
+- `<leader>aC`：继续当前会话
+- `<leader>am`：选择模型
+- `<leader>ab`：添加当前 buffer 到上下文
+- Visual 模式 `<leader>as`：发送选中内容
+- `<leader>ay`：接受 Claude diff
+- `<leader>ad`：拒绝 Claude diff
+
+### Codex
+
+- `<leader>ax`：打开/关闭 Codex 侧边栏
+- Codex 窗口中 `<C-q>`：关闭窗口
+
+### Gemini
+
+- `<leader>ge`：切换 Gemini 侧边栏
+- `<leader>gc`：启动或切换 Gemini 会话
+- `<leader>gd`：发送当前行诊断
+- `<leader>gD`：发送整个文件诊断
+- Visual 模式 `<leader>gs`：发送选中代码
+- `<leader>ga`：接受 Gemini diff
+- `<leader>gx`：拒绝 Gemini diff
+
+### 调试
+
+- `<F5>`：开始/继续调试
+- `<F1>`：步入
+- `<F2>`：步过
+- `<F3>`：步出
+- `<F7>`：切换调试 UI
+- `<leader>db`：切换断点
+- `<leader>dB`：条件断点
+
+### Todo
+
+- `<leader>xt`：在 Trouble 中查看 Todo
+- `<leader>xT`：在 Trouble 中查看 `TODO/FIX/FIXME`
+
+## 文档索引
+
+仓库里已经附带几份针对当前配置的说明文档：
+
+- [AI-快捷键说明.md](./AI-快捷键说明.md)
+- [复制粘贴速查表.md](./复制粘贴速查表.md)
+- [LEAP.md](./LEAP.md)
+- [VIDEO-00-录制总表.md](./VIDEO-00-录制总表.md)
+- [VIDEO-01-整体架构.md](./VIDEO-01-整体架构.md)
+- [VIDEO-02-日常工作流.md](./VIDEO-02-日常工作流.md)
+- [VIDEO-03-AI工作流.md](./VIDEO-03-AI工作流.md)
+- [VIDEO-04-调试与格式化.md](./VIDEO-04-调试与格式化.md)
+- [VIDEO-05-编辑体验与界面.md](./VIDEO-05-编辑体验与界面.md)
+- [VIDEO-06-如何扩展这套配置.md](./VIDEO-06-如何扩展这套配置.md)
+
+## 目录结构
+
+```text
 ~/.config/nvim/
-├── init.lua                 # 入口文件
-├── lazy-lock.json          # 插件版本锁定
-├── lazyvim.json            # LazyVim 配置
-├── stylua.toml             # Lua 格式化配置
+├── init.lua
+├── lazy-lock.json
+├── lazyvim.json
+├── after/
+│   └── ftplugin/
 ├── lua/
-│   ├── config/             # 核心配置
-│   │   ├── autocmds.lua    # 自动命令
-│   │   ├── keymaps.lua     # 自定义快捷键
-│   │   ├── lazy.lua        # Lazy.nvim 配置
-│   │   └── options.lua     # Vim 选项配置
-│   └── plugins/            # 插件配置
-│       ├── autopairs.lua   # 自动配对
-│       ├── claudecode.lua  # Claude Code AI
-│       ├── codex.lua       # Codex AI
-│       ├── dap.lua         # 调试器
-│       ├── dashboard.lua   # 启动界面
-│       ├── formatting.lua  # 格式化配置
-│       ├── gemini.lua      # Gemini AI
-│       ├── leap.lua        # 快速跳转
-│       ├── todo.lua        # Todo 注释
-│       ├── ui.lua          # UI 配置
-│       └── wakatime.lua    # 时间追踪
+│   ├── config/
+│   │   ├── autocmds.lua
+│   │   ├── keymaps.lua
+│   │   ├── lazy.lua
+│   │   └── options.lua
+│   └── plugins/
+│       ├── claudecode.lua
+│       ├── codex.lua
+│       ├── dap.lua
+│       ├── dap-lang.lua
+│       ├── editing.lua
+│       ├── formatting.lua
+│       ├── gemini.lua
+│       ├── markdown.lua
+│       ├── snacks.lua
+│       ├── ui.lua
+│       └── ...
+├── AI-快捷键说明.md
+├── 复制粘贴速查表.md
+└── README.md
 ```
 
-## 🔧 自定义配置
+## 复用建议
+
+如果你是第一次直接复用这套配置，建议按这个顺序检查：
+
+1. `nvim --version` 是否足够新
+2. `ripgrep`、`fd`、剪贴板工具是否已安装
+3. `:checkhealth` 是否通过
+4. AI 相关 CLI 或 API Key 是否配置好
+5. `:Mason` 里需要的调试器和语言工具是否安装完成
+
+如果你不需要某些能力，最简单的删减方式不是去改一个大文件，而是直接删对应的插件文件或 extras：
+
+- 不用某个 AI，就删对应插件文件或移除 `lazyvim.json` extras
+- 不用某个语言层，就删对应 `lua/plugins/*.lua`
+- 不用某份文档，就单独删对应 Markdown 文件
+
+## 自定义
 
 ### 添加新插件
 
-在 `lua/plugins/` 目录下创建新的 `.lua` 文件，例如 `lua/plugins/myplugin.lua`:
+在 `lua/plugins/` 下新增一个文件，例如：
 
 ```lua
 return {
   "username/plugin-name",
-  config = function()
-    -- 配置代码
-  end,
+  opts = {},
 }
 ```
 
-### 修改快捷键
+### 修改核心行为
 
-编辑 `lua/config/keymaps.lua` 文件添加自定义快捷键。
+- 编辑器选项：`lua/config/options.lua`
+- 快捷键：`lua/config/keymaps.lua`
+- 自动命令：`lua/config/autocmds.lua`
+- 插件入口：`lua/config/lazy.lua`
 
-### 修改选项
+### 调整语言默认缩进
 
-编辑 `lua/config/options.lua` 文件修改 Vim 选项。
+当前按文件类型的缩进覆盖在 `after/ftplugin/` 下：
 
-## 🤝 贡献
+- `python.lua`
+- `c.lua`
+- `cpp.lua`
+- `rust.lua`
 
-欢迎提交 Issue 和 Pull Request！
+## License
 
-## 📄 许可证
-
-MIT License
-
-## 🙏 致谢
-
-- [LazyVim](https://github.com/LazyVim/LazyVim) - 优秀的 Neovim 配置框架
-- [Lazy.nvim](https://github.com/folke/lazy.nvim) - 现代化的插件管理器
-- 所有插件作者的辛勤工作
-
----
-
-如果这个配置对你有帮助，请给个 ⭐️ Star！
+[MIT](./LICENSE)
