@@ -8,28 +8,22 @@
 -- e.g. vim.api.nvim_del_augroup_by_name("lazyvim_wrap_spell")
 
 -- 彻底禁止换行自动延续注释
+local function disable_comment_continuation()
+  if vim.bo.modifiable and vim.bo.buftype ~= "terminal" then
+    vim.opt_local.formatoptions:remove({ "c", "r", "o" })
+  end
+end
+
 vim.api.nvim_create_autocmd({ "FileType", "BufEnter" }, {
   pattern = "*",
-  callback = function()
-    if vim.bo.modifiable and vim.bo.buftype ~= "terminal" then
-      vim.opt_local.formatoptions:remove({ "c", "r", "o" })
-    end
-  end,
+  callback = disable_comment_continuation,
 })
+
+disable_comment_continuation()
 
 vim.api.nvim_create_autocmd("BufLeave", {
   pattern = "*lazygit*",
   callback = function()
     require("neo-tree.sources.manager").refresh("filesystem")
-  end,
-})
-
-vim.api.nvim_create_autocmd("FileType", {
-  pattern = { "c", "cpp", "python" },
-  callback = function()
-    vim.opt_local.tabstop = 4
-    vim.opt_local.shiftwidth = 4
-    vim.opt_local.softtabstop = 4
-    vim.opt_local.expandtab = true
   end,
 })
