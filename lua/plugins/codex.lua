@@ -1,45 +1,74 @@
 return {
   {
-    "kkrampis/codex.nvim",
-    dependencies = { "nvim-lua/plenary.nvim" },
+    "pittcat/codex.nvim",
+    dependencies = { "folke/snacks.nvim" },
     lazy = true,
-    cmd = { "Codex", "CodexToggle" },
+    cmd = {
+      "CodexOpen",
+      "CodexToggle",
+      "CodexSendPath",
+      "CodexSendSelection",
+      "CodexSendReference",
+      "CodexSendContent",
+    },
     keys = {
+      { "<leader>x", nil, desc = "Codex / Todo" },
       {
-        "<leader>ax",
+        "<leader>xc",
         function()
-          require("codex").toggle()
+          vim.cmd("CodexToggle")
         end,
-        desc = "Toggle Codex (AI)",
+        desc = "Toggle Codex",
         mode = { "n", "t" },
+      },
+      {
+        "<leader>xf",
+        function()
+          vim.cmd("CodexOpen")
+        end,
+        desc = "Focus Codex",
+        mode = { "n", "t" },
+      },
+      {
+        "<leader>xb",
+        function()
+          vim.cmd("CodexSendPath")
+        end,
+        desc = "Add current buffer",
+      },
+      {
+        "<leader>xs",
+        ":'<,'>CodexSendSelection<CR>",
+        mode = "x",
+        desc = "Send selection",
+      },
+      {
+        "<leader>xr",
+        ":'<,'>CodexSendReference<CR>",
+        mode = "x",
+        desc = "Send reference",
+      },
+      {
+        "<leader>xC",
+        ":'<,'>CodexSendContent<CR>",
+        mode = "x",
+        desc = "Send content",
       },
     },
     opts = {
-      keymaps = {
-        toggle = nil,
-        quit = "<C-q>",
+      terminal = {
+        provider = "snacks",
+        direction = "vertical",
+        position = "right",
+        size = 0.4,
       },
-      border = "rounded",
-      width = 0.4, -- 侧边栏模式下，宽度通常设小一点
-      height = 0.8,
-      model = nil,
-      autoinstall = true,
-      panel = true, -- 开启侧边栏模式（垂直分割）
-      use_buffer = false,
+      terminal_bridge = {
+        path_format = "rel",
+        path_prefix = "@",
+        auto_attach = true,
+        selection_mode = "reference",
+      },
+      focus_after_send = false,
     },
-  },
-
-  -- 整合 Lualine 状态显示
-  {
-    "nvim-lualine/lualine.nvim",
-    optional = true,
-    opts = function(_, opts)
-      table.insert(opts.sections.lualine_x, {
-        function()
-          local ok, codex = pcall(require, "codex")
-          return ok and codex.status() or ""
-        end,
-      })
-    end,
   },
 }

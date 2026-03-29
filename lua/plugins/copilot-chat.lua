@@ -2,7 +2,6 @@ return {
   {
     "CopilotC-Nvim/CopilotChat.nvim",
     keys = {
-      { "<leader>ax", false },
       {
         "<leader>aX",
         function()
