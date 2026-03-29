@@ -100,13 +100,20 @@ export GEMINI_API_KEY="your-api-key-here"
 
 ### Codex
 
-当前配置使用的是 `codex.nvim`，它依赖 Codex CLI。
+当前配置使用的是 `pittcat/codex.nvim`，它依赖 Codex CLI，并通过 `Snacks` 右侧分栏承载终端，同时支持把当前文件、选区引用和选区内容直接送进 Codex 会话。
 
 你至少需要：
 
 ```bash
 npm install -g @openai/codex
+codex login
+```
+
+如果你更偏好 API Key，也可以：
+
+```bash
 export OPENAI_API_KEY="your-api-key-here"
+printenv OPENAI_API_KEY | codex login --with-api-key
 ```
 
 ### LazyVim AI Extras
@@ -143,8 +150,12 @@ export OPENAI_API_KEY="your-api-key-here"
 
 ### Codex
 
-- `<leader>ax`：打开/关闭 Codex 侧边栏
-- Codex 窗口中 `<C-q>`：关闭窗口
+- `<leader>xc`：打开/关闭 Codex 终端分栏
+- `<leader>xf`：打开并聚焦 Codex
+- `<leader>xb`：发送当前文件路径到 Codex
+- Visual 模式 `<leader>xs`：发送选中内容（按当前配置默认走引用）
+- Visual 模式 `<leader>xr`：发送选中范围的文件引用
+- Visual 模式 `<leader>xC`：发送选中范围的实际代码内容
 
 ### Gemini
 
@@ -170,6 +181,8 @@ export OPENAI_API_KEY="your-api-key-here"
 
 - `<leader>xt`：在 Trouble 中查看 Todo
 - `<leader>xT`：在 Trouble 中查看 `TODO/FIX/FIXME`
+
+说明：`<leader>x` 这个前缀现在同时承载 Codex 和 Todo 相关操作。
 
 ## 文档索引
 

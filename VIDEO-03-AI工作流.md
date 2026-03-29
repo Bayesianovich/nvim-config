@@ -36,7 +36,7 @@
 
 ### 第四段：Codex 的角色
 
-> 第三个是 `lua/plugins/codex.lua`。Codex 在我这里更像一个轻量侧边栏型入口，`<leader>ax` 就能开关。它和前两个最大的区别，是它被我做成了一个比较稳定的侧边面板，而且还接到了 lualine 上，状态能直接显示出来。
+> 第三个是 `lua/plugins/codex.lua`。Codex 在我这里更像一个轻量终端型入口。现在它走 `pittcat/codex.nvim`，主入口是 `<leader>xc`，聚焦是 `<leader>xf`。我可以先把 Codex 开在右侧分栏里，再用 `<leader>xb` 发当前文件，或者用视觉模式 `<leader>xr`、`<leader>xC` 发选区引用和内容。
 
 > 也就是说，我并不是要求三个 AI 的使用方式完全一样，而是让它们各自顺着自己的优势进入我的工作流。
 
@@ -58,8 +58,9 @@
 4. 演示 `<leader>ac` 打开 Claude，展示对话界面。
 5. 回到文件，演示 `<leader>gd` 或 `<leader>gD` 送诊断到 Gemini。
 6. 演示 `<leader>ge` 切侧边栏，或者 `<leader>gc` 切到 CLI 会话。
-7. 演示 `<leader>ax` 打开 Codex 侧边栏。
-8. 最后回到 `lua/plugins/claudecode.lua`、`gemini.lua`、`codex.lua`，讲你的设计思路。
+7. 演示 `<leader>xc` 打开 Codex 右侧分栏。
+8. 在当前文件里选一段代码，演示 `<leader>xr` 或 `<leader>xC` 把引用或内容发给 Codex。
+9. 最后回到 `lua/plugins/claudecode.lua`、`gemini.lua`、`codex.lua`，讲你的设计思路。
 
 ## 录屏前准备
 
@@ -76,7 +77,7 @@
 
 ## 可直接念的总结
 
-> 我不是在 Neovim 里装了三个重复的 AI，而是给三种不同的交互方式各留了一个入口。Claude 更偏深度协作，Gemini 更偏快速诊断和会话切换，Codex 更偏轻量侧边栏。真正重要的是，这三条路径都没有让我离开编辑器。
+> 我不是在 Neovim 里装了三个重复的 AI，而是给三种不同的交互方式各留了一个入口。Claude 更偏深度协作，Gemini 更偏快速诊断和会话切换，Codex 更偏轻量终端分栏加上下文补充。真正重要的是，这三条路径都没有让我离开编辑器。
 
 ## 注意事项
 
