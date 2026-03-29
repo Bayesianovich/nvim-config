@@ -1,69 +1,68 @@
 return {
-  'mfussenegger/nvim-dap',
+  "mfussenegger/nvim-dap",
+  lazy = true,
   dependencies = {
-    'rcarriga/nvim-dap-ui',
-    'nvim-neotest/nvim-nio',
-    'mason-org/mason.nvim',
-    'jay-babu/mason-nvim-dap.nvim',
-    'leoluz/nvim-dap-go',
-    'mfussenegger/nvim-dap-python',
+    "rcarriga/nvim-dap-ui",
+    "nvim-neotest/nvim-nio",
+    "mason-org/mason.nvim",
+    "jay-babu/mason-nvim-dap.nvim",
   },
   keys = {
     {
-      '<F5>',
+      "<F5>",
       function()
-        require('dap').continue()
+        require("dap").continue()
       end,
-      desc = 'Debug: Start/Continue',
+      desc = "Debug: Start/Continue",
     },
     {
-      '<F1>',
+      "<F1>",
       function()
-        require('dap').step_into()
+        require("dap").step_into()
       end,
-      desc = 'Debug: Step Into',
+      desc = "Debug: Step Into",
     },
     {
-      '<F2>',
+      "<F2>",
       function()
-        require('dap').step_over()
+        require("dap").step_over()
       end,
-      desc = 'Debug: Step Over',
+      desc = "Debug: Step Over",
     },
     {
-      '<F3>',
+      "<F3>",
       function()
-        require('dap').step_out()
+        require("dap").step_out()
       end,
-      desc = 'Debug: Step Out',
+      desc = "Debug: Step Out",
     },
     {
-      '<leader>db',
+      "<leader>db",
       function()
-        require('dap').toggle_breakpoint()
+        require("dap").toggle_breakpoint()
       end,
-      desc = 'Debug: Toggle Breakpoint',
+      desc = "Debug: Toggle Breakpoint",
     },
     {
-      '<leader>dB',
+      "<leader>dB",
       function()
-        require('dap').set_breakpoint(vim.fn.input 'Breakpoint condition: ')
+        require("dap").set_breakpoint(vim.fn.input("Breakpoint condition: "))
       end,
-      desc = 'Debug: Set Breakpoint',
+      desc = "Debug: Set Breakpoint",
     },
     {
-      '<F7>',
+      "<F7>",
       function()
-        require('dapui').toggle()
+        require("dapui").toggle()
       end,
-      desc = 'Debug: Toggle UI',
+      desc = "Debug: Toggle UI",
     },
   },
   config = function()
-    local dap = require 'dap'
-    local dapui = require 'dapui'
+    local dap = require("dap")
+    local dapui = require("dapui")
 
-    require('mason-nvim-dap').setup {
+    require("mason-nvim-dap").setup({
       -- Makes a best effort to setup the various debuggers with
       -- reasonable debug configurations
       automatic_installation = true,
@@ -76,48 +75,36 @@ return {
       -- online, please don't ask me how to install them :)
       ensure_installed = {
         -- Update this to ensure that you have the debuggers for the languages you want
-        'delve',
-        'codelldb',
-        'debugpy',
+        "delve",
+        "codelldb",
+        "debugpy",
       },
-    }
+    })
 
     -- Dap UI setup
     -- For more information, see |:help nvim-dap-ui|
-    dapui.setup {
+    dapui.setup({
       -- Set icons to characters that are more likely to work in every terminal.
       --    Feel free to remove or use ones that you like more! :)
       --    Don't feel like these are good choices.
-      icons = { expanded = '▾', collapsed = '▸', current_frame = '*' },
+      icons = { expanded = "▾", collapsed = "▸", current_frame = "*" },
       controls = {
         icons = {
-          pause = '⏸',
-          play = '▶',
-          step_into = '⏎',
-          step_over = '⏭',
-          step_out = '⏮',
-          step_back = 'b',
-          run_last = '▶▶',
-          terminate = '⏹',
-          disconnect = '⏏',
+          pause = "⏸",
+          play = "▶",
+          step_into = "⏎",
+          step_over = "⏭",
+          step_out = "⏮",
+          step_back = "b",
+          run_last = "▶▶",
+          terminate = "⏹",
+          disconnect = "⏏",
         },
       },
-    }
+    })
 
-    dap.listeners.after.event_initialized['dapui_config'] = dapui.open
-    dap.listeners.before.event_terminated['dapui_config'] = dapui.close
-    dap.listeners.before.event_exited['dapui_config'] = dapui.close
-
-    -- Install golang specific config
-    require('dap-go').setup {
-      delve = {
-        -- On Windows delve must be run attached or it crashes.
-        -- See https://github.com/leoluz/nvim-dap-go/blob/main/README.md#configuring
-        detached = vim.fn.has 'win32' == 0,
-      },
-    }
-
-    -- Install python specific config
-    require('dap-python').setup('python3')
+    dap.listeners.after.event_initialized["dapui_config"] = dapui.open
+    dap.listeners.before.event_terminated["dapui_config"] = dapui.close
+    dap.listeners.before.event_exited["dapui_config"] = dapui.close
   end,
 }

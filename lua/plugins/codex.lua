@@ -6,7 +6,7 @@ return {
     cmd = { "Codex", "CodexToggle" },
     keys = {
       {
-        "<leader>cx",
+        "<leader>ax",
         function()
           require("codex").toggle()
         end,
