@@ -1,6 +1,6 @@
 # Leap 快速上手
 
-这份说明对应当前配置文件 [lua/plugins/leap.lua](/root/.config/nvim/lua/plugins/leap.lua) 里的映射。
+这份说明对应当前配置文件 [lua/plugins/leap.lua](./lua/plugins/leap.lua) 里的映射。
 
 ## 当前键位
 

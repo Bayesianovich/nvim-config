@@ -78,3 +78,10 @@ vim.keymap.set("t", "<C-Right>", resize_terminal_window("vertical resize +2"), {
 vim.keymap.set("n", "<leader>gg", function()
   Snacks.lazygit.open()
 end, { desc = "Lazygit" })
+
+pcall(vim.keymap.del, "n", "gx")
+pcall(vim.keymap.del, "x", "gx")
+
+vim.keymap.set({ "n", "x" }, "gx", function()
+  require("config.platform").open()
+end, { desc = "Open filepath or URI under cursor" })

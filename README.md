@@ -10,6 +10,8 @@
 
 这不是一套“尽量堆满插件”的配置，而是一套按功能拆文件、方便长期维护和复用的配置。
 
+当前仓库默认按 `macOS / Ubuntu / WSL2` 三类本地环境做兼容，剪贴板和 `gx` 打开链接/文件会根据平台自动选择合适的系统命令。
+
 ## 特点
 
 - 基于 LazyVim，但保留了明确的个人工作流
@@ -33,11 +35,17 @@
 根据你的使用场景，下面这些工具也很推荐：
 
 - `lazygit`
-- `wl-clipboard` 或 `xclip`
+- `wl-clipboard`、`xclip` 或 `xsel`
 - `node`
 - `python3`
 - `go`
 - `clang-format`
+
+平台说明：
+
+- `macOS`：优先使用系统自带的 `pbcopy` / `pbpaste` 和 `open`
+- `Ubuntu`：优先使用 `wl-clipboard`，其次回退到 `xclip` / `xsel`，打开链接依赖 `xdg-open`
+- `WSL2`：默认走 `clip.exe` / `powershell.exe` 和 `explorer.exe`
 
 ## 安装
 
