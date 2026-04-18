@@ -27,7 +27,8 @@
 
 3. AI 演示前检查
 
-- 确认 API Key 已经配好，不要把环境变量暴露在录屏里。
+- 确认 Claude CLI 已认证、Codex 已完成 `codex login`。
+- 确认 `gemini` 或 `qwen` CLI 可以直接调用；如果你的 Gemini CLI 走 API Key，再提前配好。
 - 提前跑一遍 Claude、Gemini、Codex，确认它们能正常打开。
 
 4. DAP 演示前检查
@@ -65,6 +66,7 @@
 - `lua/config` 和 `lua/plugins` 分层明确。
 - AI 不是只装一个插件，而是按场景并存。
 - 日常工作流里终端、Git、编辑、调试是连起来的。
+- 跨平台剪贴板和 `gx` 打开被抽成了单独的平台层。
 - 不是追求“插件越多越好”，而是追求“入口少、路径短、能重复使用”。
 
 ## 对应文件清单
@@ -74,6 +76,7 @@
 - `lua/config/options.lua`
 - `lua/config/keymaps.lua`
 - `lua/config/autocmds.lua`
+- `lua/config/platform.lua`
 - `lua/plugins/claudecode.lua`
 - `lua/plugins/codex.lua`
 - `lua/plugins/gemini.lua`
@@ -81,10 +84,14 @@
 - `lua/plugins/dap-lang.lua`
 - `lua/plugins/formatting.lua`
 - `lua/plugins/editing.lua`
+- `lua/plugins/git-view.lua`
 - `lua/plugins/leap.lua`
 - `lua/plugins/folding.lua`
 - `lua/plugins/markdown.lua`
+- `lua/plugins/platform.lua`
 - `lua/plugins/ui.lua`
+- `lua/plugins/todo.lua`
+- `lua/plugins/web.lua`
 - `lua/plugins/dashboard.lua`
 - `lua/plugins/snacks.lua`
 

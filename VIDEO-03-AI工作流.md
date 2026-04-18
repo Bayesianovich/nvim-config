@@ -30,13 +30,13 @@
 
 ### 第三段：Gemini 的角色
 
-> 再看 `lua/plugins/gemini.lua`。Gemini 在我这里更适合快速诊断、快速发一段内容、快速切到 CLI 会话。比如我想把当前行诊断、当前文件诊断、或者一段选中代码直接送过去，我会更倾向走这一条路径。
+> 再看 `lua/plugins/gemini.lua`。Gemini 在我这里更适合快速诊断、快速发一段内容、快速切到 CLI 会话。比如我想把当前行诊断、当前文件诊断、或者一段选中代码直接送过去，我会更倾向走这一条路径。这里还有一个现实细节，就是这一套当前是条件加载的，机器上得先有 `gemini` 或 `qwen` CLI。
 
 > 对应快捷键也很直接，`<leader>ge` 是切侧边栏，`<leader>gc` 是启动或切换会话，`<leader>gd` 和 `<leader>gD` 是送诊断，`<leader>gs` 是送选区，`<leader>ga`、`<leader>gx` 是接受和拒绝改动。
 
 ### 第四段：Codex 的角色
 
-> 第三个是 `lua/plugins/codex.lua`。Codex 在我这里更像一个轻量终端型入口。现在它走 `pittcat/codex.nvim`，主入口是 `<leader>xc`，聚焦是 `<leader>xf`。我可以先把 Codex 开在右侧分栏里，再用 `<leader>xb` 发当前文件，或者用视觉模式 `<leader>xr`、`<leader>xC` 发选区引用和内容。
+> 第三个是 `lua/plugins/codex.lua`。Codex 在我这里更像一个轻量终端型入口。现在它走 `pittcat/codex.nvim`，主入口是 `<leader>xc`，聚焦是 `<leader>xf`。我可以先把 Codex 开在右侧分栏里，再用 `<leader>xb` 发当前文件。视觉模式下 `<leader>xs` 默认按引用发送选区，需要更明确时再用 `<leader>xr`、`<leader>xC` 发选区引用和实际内容。
 
 > 也就是说，我并不是要求三个 AI 的使用方式完全一样，而是让它们各自顺着自己的优势进入我的工作流。
 
@@ -59,12 +59,13 @@
 5. 回到文件，演示 `<leader>gd` 或 `<leader>gD` 送诊断到 Gemini。
 6. 演示 `<leader>ge` 切侧边栏，或者 `<leader>gc` 切到 CLI 会话。
 7. 演示 `<leader>xc` 打开 Codex 右侧分栏。
-8. 在当前文件里选一段代码，演示 `<leader>xr` 或 `<leader>xC` 把引用或内容发给 Codex。
+8. 在当前文件里选一段代码，先演示 `<leader>xs` 默认按引用发送，再补一个 `<leader>xr` 或 `<leader>xC` 的差异。
 9. 最后回到 `lua/plugins/claudecode.lua`、`gemini.lua`、`codex.lua`，讲你的设计思路。
 
 ## 录屏前准备
 
-- API Key 确认无误
+- 确认 Claude CLI 和 Codex CLI 都已经完成登录
+- 确认 `gemini` 或 `qwen` CLI 可以直接调用；如果你的 Gemini CLI 走 API Key，再提前配好
 - 至少准备一个带诊断的文件
 - 至少准备一段能让 AI 给出明显修改建议的代码
 - 先手动试一遍每个快捷键，避免录制时首次加载卡顿

@@ -12,7 +12,14 @@
 - 现在 `Claude Code` 主要走 `<leader>a*`
 - 现在 `Codex` 主要走 `<leader>x*`
 - 现在 `Gemini` 仍然走 `<leader>g*`
+- `<leader>g*` 这一组里，Gemini 和 Git / Diffview 共享前缀
 - `<leader>c*` 已经让回给 `LSP`，用于 code action、rename 等代码能力
+
+## 使用前提
+
+- Claude Code：`claude` CLI 已安装并完成认证
+- Codex：Codex CLI 已安装，并且已经执行过 `codex login`
+- Gemini：当前插件只有系统里存在 `gemini` 或 `qwen` CLI 时才会启用；如果你走 Gemini CLI，再按 CLI 自己的方式配置认证
 
 ## Claude Code
 

@@ -20,7 +20,7 @@
 
 ### 第一段：扩展原则
 
-> 我扩展这套配置时，第一原则不是“先找一个最强插件”，而是先判断它属于哪一层。是编辑器基础选项？是额外快捷键？还是一个独立能力模块？如果是独立能力模块，我就尽量给它单独一个文件，放进 `lua/plugins`。
+> 我扩展这套配置时，第一原则不是“先找一个最强插件”，而是先判断它属于哪一层。是编辑器基础选项？是额外快捷键？还是一个独立能力模块？如果是独立能力模块，我就尽量给它单独一个文件，放进 `lua/plugins`。语言支持只是其中一种扩展，平台兼容和开发栈补丁我也会按这个原则拆。
 
 > 也就是说，我不会轻易把一个新功能塞回 `init.lua`，也不会把所有增量都堆进一个大杂烩文件。
 
@@ -28,9 +28,9 @@
 
 > 比如 `lua/plugins/haskell.lua` 这个文件就是一个很标准的例子。它只做两件事，一个是给 `nvim-lspconfig` 增加 `hls`，一个是给 Treesitter 增加 `haskell` parser。这个文件结构很适合拿来教学，因为它说明了一件事：当你加一门语言时，通常只需要补三类东西，LSP、语法高亮、必要的话再加格式化或调试。
 
-### 第三段：以 Markdown 为例
+### 第三段：以 Markdown、Web、Platform 为例
 
-> `lua/plugins/markdown.lua` 也是一样。它补了 markdown 和 markdown_inline 的 parser，再接一个 `render-markdown.nvim`。这就是我喜欢的扩展方式：同一类能力放一起，而且尽量只写和这个主题直接相关的代码。
+> `lua/plugins/markdown.lua` 也是一样。它补了 markdown 和 markdown_inline 的 parser，再接一个 `render-markdown.nvim`。`lua/plugins/web.lua` 则把 HTML、CSS、SCSS 和 Emmet 的 parser、LSP、Mason 安装收在一起。再加上 `lua/config/platform.lua` 和 `lua/plugins/platform.lua` 这种平台层，你会发现扩展并不一定只按语言分，也可以按平台兼容和开发栈分。关键是主题要清楚。
 
 ### 第四段：以格式化和调试为例
 
@@ -49,22 +49,27 @@
 1. 先打开 `lua/config/lazy.lua`，说明插件入口就是 `import = "plugins"`。
 2. 打开 `lua/plugins/haskell.lua`，讲语言扩展最小单元。
 3. 打开 `lua/plugins/markdown.lua`，讲文档类能力怎么加。
-4. 打开 `lua/plugins/formatting.lua`，讲格式化怎么做局部覆盖。
-5. 打开 `lua/plugins/dap.lua` 和 `lua/plugins/dap-lang.lua`，讲通用调试层和语言层协作。
-6. 最后回到 `lua/plugins` 目录，强调“按主题拆文件”的方法论。
+4. 打开 `lua/plugins/web.lua`，讲前端栈能力怎么按主题补齐。
+5. 打开 `lua/config/platform.lua` 和 `lua/plugins/platform.lua`，讲平台兼容为什么也值得单独一层。
+6. 打开 `lua/plugins/formatting.lua`，讲格式化怎么做局部覆盖。
+7. 打开 `lua/plugins/dap.lua` 和 `lua/plugins/dap-lang.lua`，讲通用调试层和语言层协作。
+8. 最后回到 `lua/plugins` 目录，强调“按主题拆文件”的方法论。
 
 ## 这一集要打开的文件
 
 - `lua/config/lazy.lua`
+- `lua/config/platform.lua`
 - `lua/plugins/haskell.lua`
 - `lua/plugins/markdown.lua`
+- `lua/plugins/platform.lua`
+- `lua/plugins/web.lua`
 - `lua/plugins/formatting.lua`
 - `lua/plugins/dap.lua`
 - `lua/plugins/dap-lang.lua`
 
 ## 可直接念的总结
 
-> 扩展 Neovim 配置，最怕的不是加不进去，而是加进去之后结构开始崩。我的做法是把每次扩展都当成一个独立主题：语言支持一个文件，格式化一个文件，调试一层总入口。这样你以后改起来才不会痛苦。
+> 扩展 Neovim 配置，最怕的不是加不进去，而是加进去之后结构开始崩。我的做法是把每次扩展都当成一个独立主题：语言支持一个文件，平台兼容一层，格式化一个文件，调试一层总入口。这样你以后改起来才不会痛苦。
 
 ## 注意事项
 

@@ -28,19 +28,19 @@
 
 ### 第二段：讲 `lua/config`
 
-> 继续看 `lua/config` 这个目录，这里是整套配置的核心层。最重要的几个文件，一个是 `lazy.lua`，它负责把 LazyVim 和我自己的 `plugins` 目录都接进来。一个是 `options.lua`，放编辑器选项。一个是 `keymaps.lua`，放我额外加的快捷键。还有一个 `autocmds.lua`，放自动命令。
+> 继续看 `lua/config` 这个目录，这里是整套配置的核心层。最重要的几个文件，一个是 `lazy.lua`，它负责把 LazyVim 和我自己的 `plugins` 目录都接进来。一个是 `options.lua`，放编辑器选项。一个是 `keymaps.lua`，放我额外加的快捷键。`autocmds.lua` 放自动命令。现在我还专门拆了一个 `platform.lua`，把跨平台剪贴板和 `gx` 打开路径、链接的行为单独收口。
 
 > 这几个文件的职责很明确。选项在选项里，快捷键在快捷键里，自动命令在自动命令里。你后面维护的时候脑子负担会小很多。很多人的配置越写越乱，本质上不是不会写 Lua，而是文件职责一开始没分清。
 
 ### 第三段：讲 `lua/plugins`
 
-> 再往下看就是 `lua/plugins`。这个目录是我最常用的组织方式。它不是按“插件作者”分，也不是按“安装顺序”分，而是按功能分。比如 AI 相关我拆成 `claudecode.lua`、`codex.lua`、`gemini.lua`。调试相关拆成 `dap.lua` 和 `dap-lang.lua`。格式化有 `formatting.lua`。编辑体验有 `editing.lua`、`leap.lua`、`folding.lua`。界面和视觉有 `ui.lua`、`dashboard.lua`。
+> 再往下看就是 `lua/plugins`。这个目录是我最常用的组织方式。它不是按“插件作者”分，也不是按“安装顺序”分，而是按功能分。比如 AI 相关我拆成 `claudecode.lua`、`codex.lua`、`gemini.lua`。Git 和项目信息流拆成 `git-view.lua`、`todo.lua`。调试相关拆成 `dap.lua` 和 `dap-lang.lua`。格式化有 `formatting.lua`。编辑体验有 `editing.lua`、`leap.lua`、`folding.lua`。界面和视觉有 `ui.lua`、`dashboard.lua`。平台兼容和前端补丁则单独拆成 `platform.lua`、`web.lua`。
 
 > 这么拆的好处是，你以后想删一个能力，或者重做一类功能，直接找到对应文件就行，不需要在一个上千行的总配置里到处搜。
 
 ### 第四段：讲一个很有代表性的自定义
 
-> 这套配置里我觉得比较能代表我思路的，不是某一个插件，而是我会在默认行为上做很小但很具体的补丁。比如 `lua/plugins/snacks.lua` 这里，我没有重写整个 Snacks，而是只补了一段针对 picker 打开文件的安全处理。这个思路很重要：你不需要为了一个细节问题推翻整套插件，只要在局部把路径补顺。
+> 这套配置里我觉得比较能代表我思路的，不是某一个插件，而是我会在默认行为上做很小但很具体的补丁。比如 `lua/config/platform.lua` 里，我把跨平台剪贴板和 `gx` 打开动作抽成了一层；`lua/plugins/snacks.lua` 里，我也没有重写整个 Snacks，而是只补了终端和 picker 的局部行为。这个思路很重要：你不需要为了一个细节问题推翻整套插件，只要在局部把路径补顺。
 
 ### 第五段：讲为什么这样拆适合教学
 
@@ -56,9 +56,9 @@
 2. 回到项目根目录，展示仓库树结构。
 3. 打开 `init.lua`，停留 3 秒，强调入口很薄。
 4. 打开 `lua/config/lazy.lua`，讲 LazyVim 和自定义插件入口。
-5. 依次打开 `lua/config/options.lua`、`lua/config/keymaps.lua`、`lua/config/autocmds.lua`。
+5. 依次打开 `lua/config/options.lua`、`lua/config/keymaps.lua`、`lua/config/autocmds.lua`、`lua/config/platform.lua`。
 6. 切到 `lua/plugins` 目录，快速扫过文件名。
-7. 分别点开 `claudecode.lua`、`dap.lua`、`dap-lang.lua`、`editing.lua`、`ui.lua`，展示“按功能拆文件”的感觉。
+7. 分别点开 `claudecode.lua`、`git-view.lua`、`dap.lua`、`editing.lua`、`web.lua`、`ui.lua`，展示“按功能拆文件”的感觉。
 8. 最后点开 `lua/plugins/snacks.lua`，讲“只补细节，不推翻默认”的思路。
 
 ## 录屏时应该打开的文件
@@ -68,11 +68,14 @@
 - `lua/config/options.lua`
 - `lua/config/keymaps.lua`
 - `lua/config/autocmds.lua`
+- `lua/config/platform.lua`
 - `lua/plugins/snacks.lua`
 - `lua/plugins/claudecode.lua`
+- `lua/plugins/git-view.lua`
 - `lua/plugins/dap.lua`
 - `lua/plugins/dap-lang.lua`
 - `lua/plugins/editing.lua`
+- `lua/plugins/web.lua`
 - `lua/plugins/ui.lua`
 
 ## 镜头备注

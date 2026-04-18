@@ -7,16 +7,21 @@
 - 调试：`nvim-dap`、`nvim-dap-ui`、`mason-nvim-dap`
 - 编辑体验：Leap、Yanky、Surround、UFO Folding
 - 文档与界面：render-markdown、Dashboard、Lualine、透明主题
+- Web 前端：HTML / CSS / SCSS、Tailwind、Emmet
 
 这不是一套“尽量堆满插件”的配置，而是一套按功能拆文件、方便长期维护和复用的配置。
 
 当前仓库默认按 `macOS / Ubuntu / WSL2` 三类本地环境做兼容，剪贴板和 `gx` 打开链接/文件会根据平台自动选择合适的系统命令。
+
+前端相关能力除了 LazyVim extras 里的 `typescript` / `tailwind` / `prettier` / `eslint` 之外，还额外补了 HTML、CSS、SCSS 的 Treesitter 与 LSP，以及 `emmet-language-server`。
 
 ## 特点
 
 - 基于 LazyVim，但保留了明确的个人工作流
 - `lua/config` 负责核心行为，`lua/plugins` 负责功能模块
 - AI、终端、调试、编辑体验分层清晰
+- 内置跨平台剪贴板和 `gx` 打开能力
+- HTML / CSS / SCSS / Emmet 语言支持按模块补齐
 - 保留 `lazy-lock.json`，方便复现锁定版本
 - 支持按文件类型覆盖缩进，例如 Python / C / C++ / Rust 默认 4 空格
 
@@ -43,6 +48,7 @@
 
 平台说明：
 
+- 如果检测到 `win32yank.exe`，会优先用它接管系统剪贴板
 - `macOS`：优先使用系统自带的 `pbcopy` / `pbpaste` 和 `open`
 - `Ubuntu`：优先使用 `wl-clipboard`，其次回退到 `xclip` / `xsel`，打开链接依赖 `xdg-open`
 - `WSL2`：默认走 `clip.exe` / `powershell.exe` 和 `explorer.exe`
@@ -100,7 +106,9 @@ claude doctor
 
 ### Gemini
 
-需要设置：
+当前这部分配置只会在系统里存在 `gemini` 或 `qwen` CLI 时启用，所以至少要先保证其中一个命令在 `PATH` 里可用。
+
+如果你走 Gemini CLI，再按 CLI 自己的认证方式配置，例如：
 
 ```bash
 export GEMINI_API_KEY="your-api-key-here"
@@ -141,8 +149,17 @@ printenv OPENAI_API_KEY | codex login --with-api-key
 - `<leader>` = 空格
 - `<leader>2`：打开/关闭居中的浮动终端
 - `<leader>3`：打开/关闭右侧终端
-- `<leader>gg`：打开 Lazygit
+- `gx`：按当前平台打开光标下的文件路径或 URI
 - `<leader>p`：打开 Yank 历史
+
+### Git / Diffview
+
+- `<leader>gg`：打开 Lazygit
+- `<leader>gV`：打开 Diffview
+- `<leader>gH`：查看当前文件历史
+- `<leader>gF`：切换 Diffview 文件列表
+
+说明：`<leader>g` 这一组现在同时承载 Git / Diffview 和 Gemini 相关操作。
 
 ### Claude Code
 
@@ -221,18 +238,25 @@ printenv OPENAI_API_KEY | codex login --with-api-key
 │   │   ├── autocmds.lua
 │   │   ├── keymaps.lua
 │   │   ├── lazy.lua
-│   │   └── options.lua
+│   │   ├── options.lua
+│   │   └── platform.lua
 │   └── plugins/
 │       ├── claudecode.lua
 │       ├── codex.lua
 │       ├── dap.lua
 │       ├── dap-lang.lua
+│       ├── dashboard.lua
 │       ├── editing.lua
 │       ├── formatting.lua
 │       ├── gemini.lua
+│       ├── git-view.lua
+│       ├── leap.lua
 │       ├── markdown.lua
+│       ├── platform.lua
 │       ├── snacks.lua
+│       ├── todo.lua
 │       ├── ui.lua
+│       ├── web.lua
 │       └── ...
 ├── AI-快捷键说明.md
 ├── 复制粘贴速查表.md
