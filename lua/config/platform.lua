@@ -3,6 +3,7 @@ local M = {}
 local uname = vim.uv.os_uname()
 
 M.is_wsl = vim.fn.has("wsl") == 1
+M.is_windows = vim.fn.has("win32") == 1 or vim.fn.has("win64") == 1
 M.is_mac = uname.sysname == "Darwin"
 M.is_linux = uname.sysname == "Linux" and not M.is_wsl
 
@@ -157,6 +158,8 @@ function M.open(target)
       end
     end
     cmd = { "explorer.exe", open_target }
+  elseif M.is_windows and M.has("rundll32.exe") then
+    cmd = { "rundll32.exe", "url.dll,FileProtocolHandler", open_target }
   elseif M.is_mac and M.has("open") then
     cmd = { "open", open_target }
   elseif M.has("xdg-open") then

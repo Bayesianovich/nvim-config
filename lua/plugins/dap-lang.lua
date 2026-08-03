@@ -23,7 +23,11 @@ return {
       "mfussenegger/nvim-dap",
     },
     config = function()
-      require("dap-python").setup("python3")
+      local python = vim.fn.exepath("python3")
+      if python == "" then
+        python = vim.fn.exepath("python")
+      end
+      require("dap-python").setup(python ~= "" and python or "python")
     end,
   },
 }
