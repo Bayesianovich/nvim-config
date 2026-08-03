@@ -5,7 +5,11 @@ return {
     "rcarriga/nvim-dap-ui",
     "nvim-neotest/nvim-nio",
     "mason-org/mason.nvim",
-    "jay-babu/mason-nvim-dap.nvim",
+    {
+      "jay-babu/mason-nvim-dap.nvim",
+      lazy = true,
+      cmd = { "DapInstall", "DapUninstall" },
+    },
   },
   keys = {
     {

@@ -20,10 +20,3 @@ vim.api.nvim_create_autocmd({ "FileType", "BufEnter" }, {
 })
 
 disable_comment_continuation()
-
-vim.api.nvim_create_autocmd("BufLeave", {
-  pattern = "*lazygit*",
-  callback = function()
-    require("neo-tree.sources.manager").refresh("filesystem")
-  end,
-})

@@ -82,6 +82,16 @@ end, { desc = "Lazygit" })
 pcall(vim.keymap.del, "n", "gx")
 pcall(vim.keymap.del, "x", "gx")
 
-vim.keymap.set({ "n", "x" }, "gx", function()
+vim.keymap.set("n", "gx", function()
   require("config.platform").open()
 end, { desc = "Open filepath or URI under cursor" })
+
+vim.keymap.set("x", "gx", function()
+  local region = vim.fn.getregion(vim.fn.getpos("v"), vim.fn.getpos("."), { type = vim.fn.mode() })
+  if #region ~= 1 then
+    vim.notify("Select a single filepath or URI", vim.log.levels.WARN)
+    return
+  end
+
+  require("config.platform").open(vim.trim(region[1]))
+end, { desc = "Open selected filepath or URI" })

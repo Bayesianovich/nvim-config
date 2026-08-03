@@ -12,9 +12,9 @@ return {
       "CodexSendContent",
     },
     keys = {
-      { "<leader>x", nil, desc = "Codex / Todo" },
+      { "<leader>ao", nil, desc = "Codex" },
       {
-        "<leader>xc",
+        "<leader>aoc",
         function()
           vim.cmd("CodexToggle")
         end,
@@ -22,7 +22,7 @@ return {
         mode = { "n", "t" },
       },
       {
-        "<leader>xf",
+        "<leader>aof",
         function()
           vim.cmd("CodexOpen")
         end,
@@ -30,26 +30,26 @@ return {
         mode = { "n", "t" },
       },
       {
-        "<leader>xb",
+        "<leader>aob",
         function()
           vim.cmd("CodexSendPath")
         end,
         desc = "Add current buffer",
       },
       {
-        "<leader>xs",
+        "<leader>aos",
         ":'<,'>CodexSendSelection<CR>",
         mode = "x",
         desc = "Send selection",
       },
       {
-        "<leader>xr",
+        "<leader>aor",
         ":'<,'>CodexSendReference<CR>",
         mode = "x",
         desc = "Send reference",
       },
       {
-        "<leader>xC",
+        "<leader>aoC",
         ":'<,'>CodexSendContent<CR>",
         mode = "x",
         desc = "Send content",
