@@ -3,42 +3,48 @@
 -- Add any additional keymaps here
 
 local terminal_context_group = vim.api.nvim_create_augroup("user_terminal_context", { clear = true })
-local last_non_terminal_buf = nil
+local function buffer_directory(buf)
+  if not vim.api.nvim_buf_is_valid(buf) or vim.bo[buf].buftype ~= "" then
+    return nil
+  end
+  local name = vim.api.nvim_buf_get_name(buf)
+  if name == "" then
+    return nil
+  end
+  return vim.fn.isdirectory(name) == 1 and name or vim.fs.dirname(name)
+end
 
 vim.api.nvim_create_autocmd("BufEnter", {
   group = terminal_context_group,
   callback = function(event)
-    if vim.bo[event.buf].buftype ~= "terminal" then
-      last_non_terminal_buf = event.buf
+    if buffer_directory(event.buf) then
+      vim.t.terminal_context_buf = event.buf
     end
   end,
 })
 
-local function terminal_context_buf()
+local function terminal_directory()
   local current = vim.api.nvim_get_current_buf()
-  if vim.bo[current].buftype ~= "terminal" then
-    return current
+  -- Reuse the creation directory while inside a terminal. Its temporary
+  -- buffer must never replace the file context or change the terminal ID.
+  local terminal = vim.b[current].snacks_terminal
+  if terminal and terminal.cwd then
+    return terminal.cwd
   end
-
-  if last_non_terminal_buf and vim.api.nvim_buf_is_valid(last_non_terminal_buf) then
-    return last_non_terminal_buf
+  local directory = buffer_directory(current)
+  if directory then
+    return directory
   end
-
-  local alternate = vim.fn.bufnr("#")
-  if alternate > 0 and vim.api.nvim_buf_is_valid(alternate) and vim.bo[alternate].buftype ~= "terminal" then
-    return alternate
+  local previous = vim.t.terminal_context_buf
+  if previous then
+    directory = buffer_directory(previous)
   end
-
-  return current
-end
-
-local function terminal_root()
-  return LazyVim.root({ buf = terminal_context_buf() })
+  return directory or vim.fn.getcwd()
 end
 
 local function toggle_floating_terminal()
   Snacks.terminal.toggle(nil, {
-    cwd = terminal_root(),
+    cwd = terminal_directory(),
     count = 2,
     win = {
       position = "float",
@@ -51,13 +57,17 @@ end
 
 local function toggle_right_terminal()
   Snacks.terminal.toggle(nil, {
-    cwd = terminal_root(),
+    cwd = terminal_directory(),
     count = 3,
     win = {
       position = "right",
       width = 0.42,
     },
   })
+end
+
+local function toggle_default_terminal()
+  Snacks.terminal.toggle(nil, { cwd = terminal_directory(), count = 1 })
 end
 
 local function resize_terminal_window(cmd)
@@ -70,6 +80,8 @@ end
 
 vim.keymap.set({ "n", "t" }, "<leader>2", toggle_floating_terminal, { desc = "Floating Terminal (Center)" })
 vim.keymap.set({ "n", "t" }, "<leader>3", toggle_right_terminal, { desc = "Terminal (Right Split)" })
+vim.keymap.set({ "n", "t" }, "<C-/>", toggle_default_terminal, { desc = "Terminal (File Directory)" })
+vim.keymap.set({ "n", "t" }, "<C-_>", toggle_default_terminal, { desc = "which_key_ignore" })
 vim.keymap.set("t", "<C-Up>", resize_terminal_window("resize +2"), { desc = "Increase Window Height" })
 vim.keymap.set("t", "<C-Down>", resize_terminal_window("resize -2"), { desc = "Decrease Window Height" })
 vim.keymap.set("t", "<C-Left>", resize_terminal_window("vertical resize -2"), { desc = "Decrease Window Width" })
