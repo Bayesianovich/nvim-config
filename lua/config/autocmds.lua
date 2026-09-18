@@ -20,3 +20,10 @@ vim.api.nvim_create_autocmd({ "FileType", "BufEnter" }, {
 })
 
 disable_comment_continuation()
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "markdown",
+  callback = function()
+    vim.opt_local.spell = false
+  end,
+})
