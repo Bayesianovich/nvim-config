@@ -168,7 +168,7 @@ function Install-AIClis {
 
     Write-Step "Installing optional AI CLIs. Authentication is still required afterward."
     Invoke-Native -FilePath "npm" -ArgumentList @(
-        "install", "-g", "@anthropic-ai/claude-code", "@google/gemini-cli", "@openai/codex"
+        "install", "-g", "@anthropic-ai/claude-code", "@openai/codex"
     )
 }
 
@@ -245,7 +245,7 @@ function Main {
     if (-not $WithAI) {
         Write-Step "Optional AI CLIs were not installed. Re-run with -WithAI if needed."
     } else {
-        Write-Step "Authenticate claude, gemini, and codex before using their Neovim integrations."
+        Write-Step "Authenticate claude and codex before using their Neovim integrations."
     }
     Write-Step "Select a Nerd Font in your terminal if icons are missing."
 }

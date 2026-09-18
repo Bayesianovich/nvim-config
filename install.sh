@@ -33,7 +33,7 @@ Options:
   --dry-run      Print the planned actions without changing the system.
   --skip-deps    Do not install operating-system dependencies.
   --skip-sync    Do not run the initial Lazy.nvim plugin sync.
-  --with-ai      Install Claude Code, Gemini CLI, and Codex CLI with npm.
+  --with-ai      Install Claude Code and Codex CLI with npm.
   -h, --help     Show this help message.
 EOF
 }
@@ -236,7 +236,7 @@ install_ai_clis() {
 
   log "Installing optional AI CLIs. Authentication is still required afterward."
   run npm config set prefix "$HOME/.local"
-  run npm install -g @anthropic-ai/claude-code @google/gemini-cli @openai/codex
+  run npm install -g @anthropic-ai/claude-code @openai/codex
 }
 
 check_required_commands() {
@@ -338,7 +338,7 @@ main() {
   if ((!WITH_AI)); then
     log "Optional AI CLIs were not installed. Re-run with --with-ai if needed."
   else
-    log "Authenticate claude, gemini, and codex before using their Neovim integrations."
+    log "Authenticate claude and codex before using their Neovim integrations."
   fi
   log "Select a Nerd Font in your terminal if icons are missing."
 }
