@@ -97,8 +97,8 @@ function M.clipboard_provider()
     return {
       name = "xclip",
       copy = {
-        ["+"] = "xclip -quiet -i -selection clipboard",
-        ["*"] = "xclip -quiet -i -selection primary",
+        ["+"] = "xclip -i -selection clipboard",
+        ["*"] = "xclip -i -selection primary",
       },
       paste = {
         ["+"] = "xclip -o -selection clipboard",

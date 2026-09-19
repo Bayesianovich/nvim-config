@@ -2,6 +2,17 @@ return {
   {
     "folke/snacks.nvim",
     opts = function(_, opts)
+      opts.image = vim.tbl_deep_extend("force", opts.image or {}, {
+        enabled = true,
+        doc = {
+          -- WezTerm can preview image files, but does not support Snacks'
+          -- inline placeholders. Prefer a floating preview there.
+          inline = false,
+          float = true,
+          max_width = 80,
+          max_height = 40,
+        },
+      })
       opts.terminal = opts.terminal or {}
       opts.terminal.win = opts.terminal.win or {}
       opts.terminal.win.keys = opts.terminal.win.keys or {}
@@ -52,12 +63,8 @@ return {
           -- Feed an Ex command as user input so Neovim can show the built-in
           -- swap-file prompt instead of raising E325 back into Lua.
           local function open_from_cmdline(cmd, path)
-            local keys = vim.api.nvim_replace_termcodes(
-              ":" .. cmd .. " " .. vim.fn.fnameescape(path) .. "<CR>",
-              true,
-              false,
-              true
-            )
+            local keys =
+              vim.api.nvim_replace_termcodes(":" .. cmd .. " " .. vim.fn.fnameescape(path) .. "<CR>", true, false, true)
             vim.schedule(function()
               vim.cmd.redraw()
               vim.api.nvim_input(keys)
@@ -72,8 +79,7 @@ return {
             end
 
             local msg = tostring(err)
-            local stale_buffer = msg:find("Vim%(buffer%):E86", 1, false)
-              or msg:find("Vim%(buffer%):E939", 1, false)
+            local stale_buffer = msg:find("Vim%(buffer%):E86", 1, false) or msg:find("Vim%(buffer%):E939", 1, false)
             local swap_attention = msg:find("E325:", 1, false)
             if not stale_buffer and not swap_attention then
               error(err)
