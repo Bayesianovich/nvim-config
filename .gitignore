@@ -7,5 +7,6 @@ foo.*
 *.log
 data
 
-# Keep Markdown documentation local only.
+# Keep Markdown documentation local, except the repository README.
 *.md
+!README.md
